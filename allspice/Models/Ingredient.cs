@@ -1,0 +1,10 @@
+namespace allspice.Models
+{
+  public class Ingredients
+  {
+    public int Id { get; set; }
+    public string InName { get; set; }
+    public string Quantity { get; set; }
+    public string RecipeId { get; set; }
+  }
+}
