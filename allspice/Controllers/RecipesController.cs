@@ -25,7 +25,7 @@ namespace allspice.Controllers
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Recipe>> Get()
+    public ActionResult<IEnumerable<Recipe>> get()
     {
       try
       {
@@ -134,7 +134,7 @@ namespace allspice.Controllers
       try
       {
         Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
-        newIngredient.RecipeId = HttpContext.Request.Query[$"id"];
+        // newIngredient.RecipeId = HttpContext.Request.Query[$"id"];
         Ingredient ingredient = _ins.Create(newIngredient);
         return Ok(ingredient);
       }

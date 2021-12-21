@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="row mt-auto">
-      <div class="col-md-12">Recipe title</div>
+      <div class="col-md-12">{{ recipe.title }}</div>
       <div class="col-md-12">Subtitle</div>
     </div>
   </div>
@@ -31,9 +31,16 @@
 
 
 <script>
+import { computed } from '@vue/reactivity'
+import { AppState } from '../AppState'
 export default {
-  setup() {
-    return {}
+  props: {
+    recipe: { type: Object },
+  },
+  setup(props) {
+    return {
+      recipes: computed(() => AppState.recipes),
+    }
   }
 }
 </script>

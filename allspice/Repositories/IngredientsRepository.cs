@@ -29,9 +29,9 @@ namespace allspice.Repositories
     {
       string sql = @"
       INSERT INTO ingredients
-      (inName, Quantity)
+      (inName, quantity, recipeId)
       VALUES
-      (@inName, @Quantity);
+      (@inName, @quantity, @recipeId);
       SELECT LAST_INSERT_ID()
       ;";
       int id = _db.ExecuteScalar<int>(sql, newIngredient);

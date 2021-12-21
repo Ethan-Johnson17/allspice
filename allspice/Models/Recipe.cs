@@ -6,6 +6,7 @@ namespace allspice.Models
     public string Title { get; set; }
     public string Subtitle { get; set; }
     public string Category { get; set; }
+    public string imgUrl { get; set; }
     public string CreatorId { get; set; }
   }
 
