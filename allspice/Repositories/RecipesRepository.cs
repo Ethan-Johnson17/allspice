@@ -35,7 +35,6 @@ namespace allspice.Repositories
       (@title, @subtitle, @category, @CreatorId);
       SELECT LAST_INSERT_ID()
       ;";
-      // NOTE newStation is already an object so no need to wrap it in one
       int id = _db.ExecuteScalar<int>(sql, newRecipe);
       newRecipe.Id = id;
       return newRecipe;

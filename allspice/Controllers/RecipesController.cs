@@ -15,11 +15,13 @@ namespace allspice.Controllers
   {
     private readonly RecipesService _rs;
     private readonly AccountService _acctService;
+    private readonly IngredientsService _ins;
 
-    public RecipesController(RecipesService rs, AccountService acctService)
+    public RecipesController(RecipesService rs, AccountService acctService, IngredientsService ins)
     {
       _rs = rs;
       _acctService = acctService;
+      _ins = ins;
     }
 
     [HttpGet]
@@ -43,6 +45,20 @@ namespace allspice.Controllers
       {
         var recipe = _rs.Get(id);
         return Ok(recipe);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+    [HttpGet("{id}/ingredients")]
+    public ActionResult<IEnumerable<Ingredient>> GetIngredients()
+    {
+      try
+      {
+        var ingredients = _ins.Get();
+        return Ok(ingredients);
       }
       catch (Exception e)
       {
@@ -97,6 +113,35 @@ namespace allspice.Controllers
       }
     }
 
+    [HttpGet("{recipeId}/ingredients/{id}")]
+    public ActionResult<Ingredient> GetIngredient(int id)
+    {
+      try
+      {
+        var ingredient = _ins.Get(id);
+        return Ok(ingredient);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
 
+    [HttpPost("{id}/ingredients")]
+    [Authorize]
+    public async Task<ActionResult<Ingredient>> Create([FromBody] Ingredient newIngredient)
+    {
+      try
+      {
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        newIngredient.RecipeId = HttpContext.Request.Query[$"id"];
+        Ingredient ingredient = _ins.Create(newIngredient);
+        return Ok(ingredient);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
   }
 }

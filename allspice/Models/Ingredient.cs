@@ -1,6 +1,6 @@
 namespace allspice.Models
 {
-  public class Ingredients
+  public class Ingredient
   {
     public int Id { get; set; }
     public string InName { get; set; }
