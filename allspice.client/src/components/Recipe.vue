@@ -3,12 +3,10 @@
     class="body"
     style="
       background-image: url(https://thiscatdoesnotexist.com);
-      height: 250px;
-      width: 250px;
-      object-fit: cover;
+      height: 300px;
     "
   >
-    <div class="recipe vh-50 container img-fluid rounded footer">
+    <div class="recipe container img-fluid rounded footer">
       <div class="row pt-1 footer">
         <div class="col-md-5 mx-0 mt pe-0">
           <p class="bg-dark rounded">Category</p>

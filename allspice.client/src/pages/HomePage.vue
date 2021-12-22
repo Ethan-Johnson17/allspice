@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <div class="row">
-      <h1 class="col-md-12 bg-dark text-white p-3 rounded text-center">
-        AllSpice
-      </h1>
-      <div class="col-md-4" v-for="recipe in recipes" :key="recipe.id">
+    <div class="row justify-content-center">
+      <h1 class="col-md-6 text-dark p-3 rounded text-center">AllSpice</h1>
+    </div>
+    <div class="row justify-content-evenly">
+      <div class="col-md-3" v-for="recipe in recipes" :key="recipe.id">
         <Recipe :recipe="recipe" />
       </div>
     </div>

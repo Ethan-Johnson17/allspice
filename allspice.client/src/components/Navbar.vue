@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark px-3 bgImg">
+  <nav class="navbar navbar-expand-lg navbar-dark px-3 py-5 mt-4 bgImg rounded">
     <!-- <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
         <img
