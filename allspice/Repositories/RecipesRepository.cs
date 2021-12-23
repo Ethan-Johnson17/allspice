@@ -45,5 +45,27 @@ namespace allspice.Repositories
       string sql = "DELETE FROM recipes WHERE id = @id LIMIT 1;";
       _db.Execute(sql, new { id });
     }
+
+    internal List<RecipeFavoriteViewModel> getFavorites()
+    {
+      string sql = "SELECT * FROM favorites;";
+      return _db.Query<RecipeFavoriteViewModel>(sql).ToList();
+    }
+
+    internal RecipeFavoriteViewModel CreateFavorite(RecipeFavoriteViewModel newFavorite)
+    {
+      {
+        string sql = @"
+      INSERT INTO favorites
+      (recipeId, accountId, favoriteId)
+      VALUES
+      (@recipeId, @accountId, @favoriteId);
+      SELECT LAST_INSERT_ID()
+      ;";
+        int id = _db.ExecuteScalar<int>(sql, newFavorite);
+        newFavorite.FavoriteId = id;
+        return newFavorite;
+      }
+    }
   }
 }

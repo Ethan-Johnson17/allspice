@@ -23,6 +23,7 @@ namespace allspice.Controllers
       _acctService = acctService;
       _ins = ins;
     }
+    #region Recipes
 
     [HttpGet]
     public ActionResult<IEnumerable<Recipe>> get()
@@ -65,21 +66,6 @@ namespace allspice.Controllers
         return BadRequest(e.Message);
       }
     }
-
-    [HttpGet("{id}/accounts")]
-    public ActionResult<IEnumerable<RecipeFavoriteViewModel>> GetAccounts(int id)
-    {
-      try
-      {
-        List<RecipeFavoriteViewModel> accounts = _acctService.GetByRecipeId(id);
-        return Ok(accounts);
-      }
-      catch (Exception e)
-      {
-        return BadRequest(e.Message);
-      }
-    }
-
     [HttpPost]
     [Authorize]
     public async Task<ActionResult<Recipe>> Create([FromBody] Recipe newRecipe)
@@ -112,6 +98,9 @@ namespace allspice.Controllers
         return BadRequest(e.Message);
       }
     }
+    #endregion
+
+    #region Ingredients
 
     [HttpGet("{recipeId}/ingredients/{id}")]
     public ActionResult<Ingredient> GetIngredient(int id)
@@ -143,5 +132,6 @@ namespace allspice.Controllers
         return BadRequest(e.Message);
       }
     }
+    #endregion
   }
 }

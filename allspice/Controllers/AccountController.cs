@@ -9,32 +9,68 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace allspice.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class AccountController : ControllerBase
+  [ApiController]
+  [Route("[controller]")]
+  public class AccountController : ControllerBase
+  {
+    private readonly AccountService _accountService;
+    private readonly RecipesService _rs;
+
+
+    public AccountController(AccountService accountService, RecipesService rs)
     {
-        private readonly AccountService _accountService;
-
-        public AccountController(AccountService accountService)
-        {
-            _accountService = accountService;
-        }
-
-        [HttpGet]
-        [Authorize]
-        public async Task<ActionResult<Account>> Get()
-        {
-            try
-            {
-                Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
-                return Ok(_accountService.GetOrCreateProfile(userInfo));
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
+      _accountService = accountService;
+      _rs = rs;
     }
+
+    [HttpGet]
+    [Authorize]
+    public async Task<ActionResult<Account>> Get()
+    {
+      try
+      {
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        return Ok(_accountService.GetOrCreateProfile(userInfo));
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+    [HttpGet("/[controller]/favorites")]
+    [Authorize]
+
+    public ActionResult<IEnumerable<RecipeFavoriteViewModel>> GetFavorites()
+    {
+      try
+      {
+        List<RecipeFavoriteViewModel> favorites = _rs.GetFavorites();
+        return Ok(favorites);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+    [HttpPost("/[controller]/favorites")]
+    [Authorize]
+    public async Task<ActionResult<RecipeFavoriteViewModel>> Create([FromBody] RecipeFavoriteViewModel newFavorite)
+    {
+      try
+      {
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        newFavorite.AccountId = userInfo.Id;
+        RecipeFavoriteViewModel favorite = _rs.CreateFavorite(newFavorite);
+        return Ok(favorite);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+  }
 
 
 }

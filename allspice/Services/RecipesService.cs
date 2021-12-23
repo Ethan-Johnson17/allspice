@@ -41,5 +41,15 @@ namespace allspice.Services
       }
       _repo.Remove(id);
     }
+
+    internal List<RecipeFavoriteViewModel> GetFavorites()
+    {
+      return _repo.getFavorites();
+    }
+
+    internal RecipeFavoriteViewModel CreateFavorite(RecipeFavoriteViewModel newFavorite)
+    {
+      return _repo.CreateFavorite(newFavorite);
+    }
   }
 }
