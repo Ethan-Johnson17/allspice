@@ -29,14 +29,20 @@ namespace allspice.Repositories
     {
       string sql = @"
       INSERT INTO ingredients
-      (inName, quantity, recipeId)
+      (inName, quantity, recipeId, creatorId)
       VALUES
-      (@inName, @quantity, @recipeId);
+      (@inName, @quantity, @recipeId, @creatorId);
       SELECT LAST_INSERT_ID()
       ;";
       int id = _db.ExecuteScalar<int>(sql, newIngredient);
       newIngredient.Id = id;
       return newIngredient;
+    }
+
+    internal void RemoveIngredient(int id)
+    {
+      string sql = "DELETE FROM ingredients WHERE id = @id LIMIT 1;";
+      _db.Execute(sql, new { id });
     }
   }
 }

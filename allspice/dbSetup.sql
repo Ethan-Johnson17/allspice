@@ -17,16 +17,18 @@ CREATE TABLE recipes(
   FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
 ) DEFAULT CHARSET UTF8 COMMENT '';
 ALTER TABLE
-  recipes
+  ingredients
 ADD
-  imgUrl TEXT NOT NULL;
+  id int NOT NULL PRIMARY KEY AUTO_INCREMENT;
 CREATE TABLE ingredients(
     create_time DATETIME COMMENT 'Create Time',
     update_time DATETIME COMMENT 'Update Time',
     inName TEXT NOT NULL,
     quantity TEXT NOT NULL,
     recipeId INT NOT NULL,
-    FOREIGN KEY (recipeId) REFERENCES recipes(id) ON DELETE CASCADE
+    creatorId VARCHAR(255) NOT NULL,
+    FOREIGN KEY (recipeId) REFERENCES recipes(id) ON DELETE CASCADE,
+    FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
   ) DEFAULT CHARSET UTF8 COMMENT '';
 CREATE TABLE steps(
     create_time DATETIME COMMENT 'Create Time',
@@ -53,4 +55,4 @@ CREATE TABLE tries(
     FOREIGN KEY (recipeId) REFERENCES recipes(id) ON DELETE CASCADE,
     FOREIGN KEY (recipeId) REFERENCES recipes(id) ON DELETE CASCADE
   ) DEFAULT CHARSET UTF8 COMMENT '';
-DROP Table favorites;
+DROP Table ingredients;

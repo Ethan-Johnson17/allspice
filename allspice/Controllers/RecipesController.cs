@@ -53,19 +53,7 @@ namespace allspice.Controllers
       }
     }
 
-    [HttpGet("{id}/ingredients")]
-    public ActionResult<IEnumerable<Ingredient>> GetIngredients()
-    {
-      try
-      {
-        var ingredients = _ins.Get();
-        return Ok(ingredients);
-      }
-      catch (Exception e)
-      {
-        return BadRequest(e.Message);
-      }
-    }
+
     [HttpPost]
     [Authorize]
     public async Task<ActionResult<Recipe>> Create([FromBody] Recipe newRecipe)
@@ -102,19 +90,20 @@ namespace allspice.Controllers
 
     #region Ingredients
 
-    [HttpGet("{recipeId}/ingredients/{id}")]
-    public ActionResult<Ingredient> GetIngredient(int id)
+    [HttpGet("{id}/ingredients")]
+    public ActionResult<IEnumerable<Ingredient>> GetIngredients()
     {
       try
       {
-        var ingredient = _ins.Get(id);
-        return Ok(ingredient);
+        var ingredients = _ins.Get();
+        return Ok(ingredients);
       }
       catch (Exception e)
       {
         return BadRequest(e.Message);
       }
     }
+
 
     [HttpPost("{id}/ingredients")]
     [Authorize]
@@ -123,7 +112,7 @@ namespace allspice.Controllers
       try
       {
         Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
-        // newIngredient.RecipeId = HttpContext.Request.Query[$"id"];
+        newIngredient.CreatorId = userInfo.Id;
         Ingredient ingredient = _ins.Create(newIngredient);
         return Ok(ingredient);
       }
@@ -132,6 +121,7 @@ namespace allspice.Controllers
         return BadRequest(e.Message);
       }
     }
+
     #endregion
   }
 }
