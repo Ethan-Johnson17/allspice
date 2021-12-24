@@ -16,12 +16,14 @@ namespace allspice.Controllers
     private readonly RecipesService _rs;
     private readonly AccountService _acctService;
     private readonly IngredientsService _ins;
+    private readonly StepsService _ss;
 
-    public RecipesController(RecipesService rs, AccountService acctService, IngredientsService ins)
+    public RecipesController(RecipesService rs, AccountService acctService, IngredientsService ins, StepsService ss)
     {
       _rs = rs;
       _acctService = acctService;
       _ins = ins;
+      _ss = ss;
     }
     #region Recipes
 
@@ -122,6 +124,40 @@ namespace allspice.Controllers
       }
     }
 
+    #endregion
+
+    #region Steps
+    [HttpGet("{id}/steps")]
+    public ActionResult<IEnumerable<Step>> GetStep()
+    {
+      try
+      {
+        var steps = _ss.Get();
+        return Ok(steps);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+
+    [HttpPost("{id}/steps")]
+    [Authorize]
+    public async Task<ActionResult<Step>> CreateStep([FromBody] Step newStep)
+    {
+      try
+      {
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        newStep.CreatorId = userInfo.Id;
+        Step step = _ss.Create(newStep);
+        return Ok(step);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
     #endregion
   }
 }
