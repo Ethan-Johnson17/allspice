@@ -16,4 +16,10 @@ namespace allspice.Models
     public int RecipeId { get; set; }
     public string AccountId { get; set; }
   }
+  public class RecipeTryViewModel : Recipe
+  {
+    public int TryId { get; set; }
+    public int RecipeId { get; set; }
+    public string AccountId { get; set; }
+  }
 }

@@ -52,20 +52,39 @@ namespace allspice.Repositories
       return _db.Query<RecipeFavoriteViewModel>(sql).ToList();
     }
 
+
     internal RecipeFavoriteViewModel CreateFavorite(RecipeFavoriteViewModel newFavorite)
     {
-      {
-        string sql = @"
+      string sql = @"
       INSERT INTO favorites
       (recipeId, accountId, favoriteId)
       VALUES
       (@recipeId, @accountId, @favoriteId);
       SELECT LAST_INSERT_ID()
       ;";
-        int id = _db.ExecuteScalar<int>(sql, newFavorite);
-        newFavorite.FavoriteId = id;
-        return newFavorite;
-      }
+      int id = _db.ExecuteScalar<int>(sql, newFavorite);
+      newFavorite.FavoriteId = id;
+      return newFavorite;
+    }
+
+    internal List<RecipeTryViewModel> getTries()
+    {
+      string sql = "SELECT * FROM tries;";
+      return _db.Query<RecipeTryViewModel>(sql).ToList();
+    }
+
+    internal RecipeTryViewModel CreateTryRecipe(RecipeTryViewModel newTry)
+    {
+      string sql = @"
+      INSERT INTO tries
+      (recipeId, accountId, tryId)
+      VALUES
+      (@recipeId, @accountId, @tryId);
+      SELECT LAST_INSERT_ID()
+      ;";
+      int id = _db.ExecuteScalar<int>(sql, newTry);
+      newTry.TryId = id;
+      return newTry;
     }
   }
 }

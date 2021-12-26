@@ -51,5 +51,15 @@ namespace allspice.Services
     {
       return _repo.CreateFavorite(newFavorite);
     }
+
+    internal List<RecipeTryViewModel> GetTries()
+    {
+      return _repo.getTries();
+    }
+    internal RecipeTryViewModel CreateTryRecipe(RecipeTryViewModel newTry)
+    {
+      return _repo.CreateTryRecipe(newTry);
+    }
+
   }
 }

@@ -70,6 +70,39 @@ namespace allspice.Controllers
         return BadRequest(e.Message);
       }
     }
+
+    [HttpGet("/[controller]/recipes-to-try")]
+    [Authorize]
+
+    public ActionResult<IEnumerable<RecipeTryViewModel>> GetTries()
+    {
+      try
+      {
+        List<RecipeTryViewModel> tries = _rs.GetTries();
+        return Ok(tries);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+    [HttpPost("/[controller]/recipes-to-try")]
+    [Authorize]
+    public async Task<ActionResult<RecipeTryViewModel>> CreateTry([FromBody] RecipeTryViewModel newTry)
+    {
+      try
+      {
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        newTry.AccountId = userInfo.Id;
+        RecipeTryViewModel tryRecipe = _rs.CreateTryRecipe(newTry);
+        return Ok(tryRecipe);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
   }
 
 

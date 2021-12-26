@@ -48,11 +48,12 @@ CREATE TABLE favorites(
     FOREIGN KEY (accountId) REFERENCES accounts(id) ON DELETE CASCADE
   ) DEFAULT CHARSET UTF8 COMMENT '';
 CREATE TABLE tries(
+    tryId int NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
     create_time DATETIME COMMENT 'Create Time',
     update_time DATETIME COMMENT 'Update Time',
-    accountId INT NOT NULL,
+    accountId VARCHAR(255) NOT NULL,
     recipeId INT NOT NULL,
     FOREIGN KEY (recipeId) REFERENCES recipes(id) ON DELETE CASCADE,
-    FOREIGN KEY (recipeId) REFERENCES recipes(id) ON DELETE CASCADE
+    FOREIGN KEY (accountId) REFERENCES accounts(id) ON DELETE CASCADE
   ) DEFAULT CHARSET UTF8 COMMENT '';
 DROP Table ingredients;
