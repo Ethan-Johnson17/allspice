@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -52,6 +53,24 @@ namespace allspice.Repositories
       return _db.Query<RecipeFavoriteViewModel>(sql).ToList();
     }
 
+    internal Recipe Update(Recipe updateRecipe)
+    {
+      string sql = @"
+      UPDATE recipes
+      SET
+      Title = @Title,
+      Subtitle = @Subtitle,
+      Category = @Category,
+      imgUrl = @ImgUrl
+      WHERE id = @Id
+      ;";
+      int rows = _db.Execute(sql, updateRecipe);
+      if (rows <= 0)
+      {
+        throw new Exception("Recipe was not updated");
+      }
+      return updateRecipe;
+    }
 
     internal RecipeFavoriteViewModel CreateFavorite(RecipeFavoriteViewModel newFavorite)
     {

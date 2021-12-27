@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -43,6 +44,23 @@ namespace allspice.Repositories
     {
       string sql = "DELETE FROM ingredients WHERE id = @id LIMIT 1;";
       _db.Execute(sql, new { id });
+    }
+
+    internal Ingredient Update(Ingredient updatedIngredient)
+    {
+      string sql = @"
+      UPDATE ingredients
+      SET
+      InName = @InName,
+      Quantity = @Quantity
+      WHERE id = @Id
+      ;";
+      int rows = _db.Execute(sql, updatedIngredient);
+      if (rows <= 0)
+      {
+        throw new Exception("Ingredient was not updated");
+      }
+      return updatedIngredient;
     }
   }
 }

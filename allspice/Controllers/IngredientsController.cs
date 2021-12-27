@@ -62,6 +62,21 @@ namespace allspice.Controllers
     //   }
     // }
 
+    [HttpPut("{id}")]
+    public ActionResult<Ingredient> Create([FromBody] Ingredient updatedIngredient, int id)
+    {
+      try
+      {
+        updatedIngredient.Id = id;
+        Ingredient ingredient = _ins.Update(updatedIngredient);
+        return Ok(ingredient);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
     [HttpDelete("{id}")]
     [Authorize]
     public async Task<ActionResult<Ingredient>> Remove(int id)

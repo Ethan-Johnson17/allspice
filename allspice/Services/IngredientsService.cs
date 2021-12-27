@@ -42,6 +42,16 @@ namespace allspice.Services
       _repo.RemoveIngredient(id);
     }
 
+    internal Ingredient Update(Ingredient updatedIngredient)
+    {
+      Ingredient oldIngredient = Get(updatedIngredient.Id);
+      updatedIngredient.InName = updatedIngredient.InName != null ? updatedIngredient.InName : oldIngredient.InName;
+      updatedIngredient.Quantity = updatedIngredient.Quantity != null ? updatedIngredient.Quantity : oldIngredient.Quantity;
+      updatedIngredient.RecipeId = updatedIngredient.RecipeId != 0 ? updatedIngredient.RecipeId : oldIngredient.RecipeId;
+      updatedIngredient.CreatorId = updatedIngredient.CreatorId != null ? updatedIngredient.CreatorId : oldIngredient.CreatorId;
+      return _repo.Update(updatedIngredient);
+    }
+
     // internal void Remove(int id, string userId)
     // {
     //   Ingredient ingredient = Get(id);

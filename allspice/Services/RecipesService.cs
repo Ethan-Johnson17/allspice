@@ -32,6 +32,15 @@ namespace allspice.Services
       return _repo.Create(newRecipe);
     }
 
+    internal Recipe Update(Recipe updateRecipe)
+    {
+      Recipe oldRecipe = Get(updateRecipe.Id);
+      updateRecipe.Title = updateRecipe.Title != null ? updateRecipe.Title : oldRecipe.Title;
+      updateRecipe.Subtitle = updateRecipe.Subtitle != null ? updateRecipe.Subtitle : oldRecipe.Subtitle;
+      updateRecipe.Category = updateRecipe.Category != null ? updateRecipe.Category : oldRecipe.Category;
+      updateRecipe.imgUrl = updateRecipe.imgUrl != null ? updateRecipe.imgUrl : oldRecipe.imgUrl;
+      return _repo.Update(updateRecipe);
+    }
     internal void Remove(int id, string userId)
     {
       Recipe recipe = Get(id);
