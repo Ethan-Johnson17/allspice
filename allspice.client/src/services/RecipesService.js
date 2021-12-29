@@ -4,10 +4,18 @@ import { api } from "./AxiosService"
 
 class RecipesService {
   async getAll(query = '') {
-    logger.log("recipes sent")
     const res = await api.get(query)
-    logger.log("recipes", res.data)
     AppState.recipes = res.data
+  }
+
+  async createRecipe(recipe) {
+    const res = await api.post('api/recipes', recipe)
+    AppState.recipes.push(res.data)
+  }
+
+  async remove(id) {
+    const res = await api.delete('api/recipes/' + id)
+    AppState.recipes = AppState.recipes.filter(r => r.id !== id)
   }
 }
 
