@@ -2,7 +2,7 @@
   <form @submit.prevent="addRecipe">
     <div class="modal-body">
       <div class="row">
-        <div class="col m-2">
+        <div class="col-md-7 p-0">
           <h6>Recipe Title</h6>
           <input
             type="text"
@@ -13,38 +13,10 @@
             required
           />
         </div>
-      </div>
-      <div class="row">
-        <div class="col m-2">
-          <h6>Recipe subtitle</h6>
-          <input
-            type="text"
-            aria-label="Subtitle"
-            placeholder="Catchy subtitle..."
-            class="form-control"
-            v-model="editable.subtitle"
-            required
-          />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col m-2">
-          <h6>Recipe Image</h6>
-          <input
-            type="url"
-            aria-label="Image Url"
-            placeholder="Image Url"
-            class="form-control"
-            v-model="editable.imgUrl"
-            required
-          />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col m-2">
-          <div class="dropdown mx-4 my-2">
+        <div class="col-md-4 ms-2">
+          <div class="dropdown mt-4 pt-1 px-0">
             <button
-              class="btn btn-secondary dropdown-toggle"
+              class="btn btn-success dropdown-toggle"
               type="button"
               id="dropdownMenuButton1"
               data-bs-toggle="dropdown"
@@ -82,6 +54,33 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-10 p-0">
+          <h6>Recipe subtitle</h6>
+          <input
+            type="text"
+            aria-label="Subtitle"
+            placeholder="Catchy subtitle..."
+            class="form-control"
+            v-model="editable.subtitle"
+            required
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-10 p-0">
+          <h6>Recipe Image</h6>
+          <input
+            type="url"
+            aria-label="Image Url"
+            placeholder="Image Url"
+            class="form-control"
+            v-model="editable.imgUrl"
+            required
+          />
+        </div>
+      </div>
+      <div class="row"></div>
     </div>
     <div class="modal-footer">
       <button

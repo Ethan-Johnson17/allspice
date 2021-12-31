@@ -31,12 +31,14 @@ CREATE TABLE ingredients(
     FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
   ) DEFAULT CHARSET UTF8 COMMENT '';
 CREATE TABLE steps(
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
     create_time DATETIME COMMENT 'Create Time',
-    update_time DATETIME COMMENT 'Update Time',
     stepOrder INT NOT NULL,
     bodyText TEXT NOT NULL,
     recipeId INT NOT NULL,
-    FOREIGN KEY (recipeId) REFERENCES recipes(id) ON DELETE CASCADE
+    creatorId VARCHAR(255) NOT NULL,
+    FOREIGN KEY (recipeId) REFERENCES recipes(id) ON DELETE CASCADE,
+    FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
   ) DEFAULT CHARSET UTF8 COMMENT '';
 CREATE TABLE favorites(
     favoriteId int NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',

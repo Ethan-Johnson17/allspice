@@ -5,15 +5,19 @@
         <img :src="recipe.imgUrl" alt="Recipe img" />
       </div>
       <div class="col-md-8">
-        <div class="row">
+        <div class="row mb-2">
           <div class="col-md-12 border-bottom border-dark">
             <h3 class="mb-0 pb-0">{{ recipe.title }}</h3>
             <h6 class="opacity-75 mt-0 pt-0">"{{ recipe.subtitle }}"</h6>
           </div>
-          <div class="col-md-12 pt-0"></div>
+        </div>
+        <div class="row justify-content-start">
+          <div class="col-md-5 me-3"><Steps :recipe="recipe" /></div>
+          <div class="col-md-5 ms-2"><Ingredients :recipe="recipe" /></div>
         </div>
       </div>
     </div>
+
     <div class="row justify-content-end" v-if="recipe.creatorId == account.id">
       <div class="col-md-1">
         <i
@@ -28,17 +32,21 @@
 
 
 <script>
-import { computed } from '@vue/reactivity'
+import { computed, ref } from '@vue/reactivity'
 import { AppState } from '../AppState'
 import { logger } from '../utils/Logger'
 import { recipesService } from '../services/RecipesService'
+import { ingredientsService } from '../services/IngredientsService'
 import Pop from '../utils/Pop'
 import { Modal } from "bootstrap"
+import { onMounted } from '@vue/runtime-core'
 
 export default {
   props: { recipe: { type: Object } },
   setup(props) {
+    const editable = ref({})
     return {
+      editable,
       account: computed(() => AppState.account),
 
       async remove(id) {
@@ -46,7 +54,9 @@ export default {
         if (!yes) { return }
         Modal.getOrCreateInstance('#recipeDetails-' + id).toggle()
         await recipesService.remove(id)
-      }
+      },
+
+
     }
   }
 }
