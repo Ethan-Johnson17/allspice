@@ -41,5 +41,13 @@ namespace allspice.Services
       }
       _repo.RemoveStep(id);
     }
+
+    internal Step Update(Step updatedStep)
+    {
+      Step oldStep = Get(updatedStep.Id);
+      updatedStep.bodyText = updatedStep.bodyText != null ? updatedStep.bodyText : oldStep.bodyText;
+      updatedStep.StepOrder = updatedStep.StepOrder != 0 ? updatedStep.StepOrder : oldStep.StepOrder;
+      return _repo.Update(updatedStep);
+    }
   }
 }

@@ -47,5 +47,21 @@ namespace allspice.Controllers
         return BadRequest(e.Message);
       }
     }
+
+    [HttpPut("{id}")]
+    [Authorize]
+    public ActionResult<Step> Edit([FromBody] Step updatedStep, int id)
+    {
+      try
+      {
+        updatedStep.Id = id;
+        Step step = _ss.Update(updatedStep);
+        return Ok(step);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
   }
 }

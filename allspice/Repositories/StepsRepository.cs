@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -43,6 +44,23 @@ namespace allspice.Repositories
     {
       string sql = "DELETE FROM steps WHERE id = @id LIMIT 1;";
       _db.Execute(sql, new { id });
+    }
+
+    internal Step Update(Step updatedStep)
+    {
+      string sql = @"
+      UPDATE steps
+      SET
+      BodyText = @BodyText,
+      StepOrder = @StepOrder
+      WHERE id = @Id
+      ;";
+      int rows = _db.Execute(sql, updatedStep);
+      if (rows <= 0)
+      {
+        throw new Exception("Step was not updated");
+      }
+      return updatedStep;
     }
   }
 }
