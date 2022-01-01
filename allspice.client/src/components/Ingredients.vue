@@ -65,6 +65,7 @@ export default {
         const recipeId = props.recipe.id
         logger.log('ingred', ingredients)
         await ingredientsService.addIngredient(recipeId, ingredients)
+        editable.value = {}
       }
     }
   }
