@@ -13,5 +13,11 @@ class StepsService {
     logger.log('post?', res.data)
     AppState.steps.push(res.data)
   }
+
+  async editStep(stepId, step) {
+    logger.log('service', step)
+    const res = await api.put('api/steps/' + stepId, step)
+    logger.log('service res', res.data)
+  }
 }
 export const stepsService = new StepsService()

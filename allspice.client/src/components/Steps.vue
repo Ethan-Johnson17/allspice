@@ -4,8 +4,14 @@
     <div class="card-body col">
       <h5 class="card-title">Steps</h5>
       <div class="row" v-for="step in steps" :key="step.id">
-        <div class="col-md-8">
-          <p>{{ step.bodyText }}</p>
+        <div class="col-md-8 d-flex">
+          <p class="me-1">{{ step.stepOrder }}.</p>
+          <div
+            :contenteditable="step.creatorId === account.id ? 'true' : 'false'"
+            @blur="editStep(step.id)"
+          >
+            {{ step.bodyText }}
+          </div>
         </div>
       </div>
       <div class="row">
@@ -59,6 +65,7 @@ export default {
     return {
       editable,
       steps: computed(() => AppState.steps.filter(s => s.recipeId == props.recipe.id)),
+      account: computed(() => AppState.account),
 
       async addStep() {
         const step = editable.value
@@ -66,6 +73,19 @@ export default {
         const recipeId = props.recipe.id
         await stepsService.addStep(recipeId, step)
         editable.value = {}
+      },
+
+      async editStep(id) {
+        try {
+          let data = window.event.target.innerText
+          let step = { bodyText: data }
+          logger.log('controller', data)
+          await stepsService.editStep(id, step)
+          await stepsService.getAll('api/recipes/' + props.recipe.id + '/steps')
+        } catch (error) {
+          logger.log(error)
+          Pop.toast(error.message, 'error')
+        }
       }
     }
   }

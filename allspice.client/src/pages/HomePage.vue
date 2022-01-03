@@ -23,12 +23,12 @@
           data-bs-target="#modal"
         ></i>
       </div>
-      <Modal>
+      <FormModal>
         <template #modal-title>Add New Recipe</template>
         <template #modal-body>
           <AddRecipeForm />
         </template>
-      </Modal>
+      </FormModal>
     </div>
   </div>
 </template>

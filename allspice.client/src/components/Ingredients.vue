@@ -4,8 +4,25 @@
     <div class="card-body col">
       <h5 class="card-title">Ingredients</h5>
       <div class="row" v-for="ingredient in ingredients" :key="ingredient.id">
-        <div class="col-md-8">
-          <p>{{ ingredient.quantity }} {{ ingredient.inName }}</p>
+        <div class="col-md-8 d-flex">
+          <p
+            class="px-1 me-1"
+            :contenteditable="
+              ingredient.creatorId === account.id ? 'true' : 'false'
+            "
+            @blur="editIngredient(ingredient.id)"
+          >
+            {{ ingredient.quantity }}
+          </p>
+          <p
+            class="px-1 me-1"
+            :contenteditable="
+              ingredient.creatorId === account.id ? 'true' : 'false'
+            "
+            @blur="editIngredient(ingredient.id)"
+          >
+            {{ ingredient.inName }}
+          </p>
         </div>
       </div>
       <div class="row">
@@ -58,6 +75,8 @@ export default {
     return {
       editable,
       ingredients: computed(() => AppState.ingredients.filter(i => i.recipeId == props.recipe.id)),
+      account: computed(() => AppState.account),
+
 
       async addIngredient() {
         const ingredients = editable.value
@@ -66,6 +85,19 @@ export default {
         logger.log('ingred', ingredients)
         await ingredientsService.addIngredient(recipeId, ingredients)
         editable.value = {}
+      },
+
+      async editIngredient(id) {
+        try {
+          let data = window.event.target.innerText
+          let ingredient = { bodyText: data }
+          logger.log('controller', data)
+          await ingredientsService.editIngredient(id, ingredient)
+          await ingredientsService.getAll('api/recipes/' + props.recipe.id + '/ingredients')
+        } catch (error) {
+          logger.log(error)
+          Pop.toast(error.message, 'error')
+        }
       }
     }
   }

@@ -7,8 +7,25 @@
       <div class="col-md-8">
         <div class="row mb-2">
           <div class="col-md-12 border-bottom border-dark">
-            <h3 class="mb-0 pb-0">{{ recipe.title }}</h3>
-            <h6 class="opacity-75 mt-0 pt-0">"{{ recipe.subtitle }}"</h6>
+            <h3
+              class="mb-0 pb-0"
+              :contenteditable="
+                recipe.creatorId === account.id ? 'true' : 'false'
+              "
+              @blur="editTitle(recipe.id)"
+            >
+              {{ recipe.title }}
+            </h3>
+
+            <h6
+              class="opacity-75 mt-0 pt-0"
+              :contenteditable="
+                recipe.creatorId === account.id ? 'true' : 'false'
+              "
+              @blur="editSubtitle(recipe.id)"
+            >
+              {{ recipe.subtitle }}
+            </h6>
           </div>
         </div>
         <div class="row justify-content-start">
@@ -56,7 +73,28 @@ export default {
         await recipesService.remove(id)
       },
 
-
+      async editTitle(id) {
+        try {
+          let data = window.event.target.innerText
+          let editedRecipe = { title: data }
+          logger.log('controller', data)
+          await recipesService.editRecipe(id, editedRecipe)
+        } catch (error) {
+          logger.log(error)
+          Pop.toast(error.message, 'error')
+        }
+      },
+      async editSubtitle(id) {
+        try {
+          let data = window.event.target.innerText
+          let editedRecipe = { subtitle: data }
+          logger.log('controller', data)
+          await recipesService.editRecipe(id, editedRecipe)
+        } catch (error) {
+          logger.log(error)
+          Pop.toast(error.message, 'error')
+        }
+      }
     }
   }
 }
