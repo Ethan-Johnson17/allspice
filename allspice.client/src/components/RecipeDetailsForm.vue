@@ -1,12 +1,16 @@
 <template>
-  <div class="container modal-body">
+  <div class="container modal-body p-0">
     <div class="row">
-      <div class="col-md-4">
-        <img :src="recipe.imgUrl" alt="Recipe img" />
-      </div>
-      <div class="col-md-8">
+      <div
+        class="col-md-4 rounded"
+        :style="{
+          'background-image': 'url(' + recipe.imgUrl + ')',
+          height: '55vh',
+        }"
+      ></div>
+      <div class="col-md-8 pt-3">
         <div class="row mb-2">
-          <div class="col-md-12 border-bottom border-dark">
+          <div class="col-md-9 border-bottom border-dark">
             <h3
               class="mb-0 pb-0"
               :contenteditable="
@@ -27,21 +31,34 @@
               {{ recipe.subtitle }}
             </h6>
           </div>
+          <div class="col-md-2 pt-2">
+            <h6 class="opacity-75 border border-dark rounded text-center">
+              {{ recipe.category }}
+            </h6>
+          </div>
+          <div class="col-md-1">
+            <button
+              type="button"
+              class="btn-close mt-1"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
         </div>
         <div class="row justify-content-start">
           <div class="col-md-5 me-3"><Steps :recipe="recipe" /></div>
           <div class="col-md-5 ms-2"><Ingredients :recipe="recipe" /></div>
+          <div
+            class="col-md-11 text-end ms-4"
+            v-if="recipe.creatorId == account.id"
+          >
+            <i
+              class="mdi mdi-delete-circle-outline f-20 selectable"
+              title="delete"
+              @click="remove(recipe.id)"
+            ></i>
+          </div>
         </div>
-      </div>
-    </div>
-
-    <div class="row justify-content-end" v-if="recipe.creatorId == account.id">
-      <div class="col-md-1">
-        <i
-          class="mdi mdi-delete-circle-outline f-20 selectable"
-          title="delete"
-          @click="remove(recipe.id)"
-        ></i>
       </div>
     </div>
   </div>
@@ -102,9 +119,7 @@ export default {
 
 
 <style lang="scss" scoped>
-img {
-  object-fit: cover;
-  height: 400px;
-  width: 250px;
+div {
+  background-size: cover;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="card row">
+  <div class="card row ms-1">
     <div class="card-header">Steps</div>
     <div class="card-body col">
       <h5 class="card-title">Steps</h5>
