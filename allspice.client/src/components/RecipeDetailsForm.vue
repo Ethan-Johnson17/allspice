@@ -5,7 +5,7 @@
         class="col-md-4 rounded"
         :style="{
           'background-image': 'url(' + recipe.imgUrl + ')',
-          height: '55vh',
+          height: '70vh',
         }"
       ></div>
       <div class="col-md-8 pt-3">

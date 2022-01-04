@@ -29,6 +29,8 @@
         </li>
       </ul> -->
       <span class="navbar-text">
+        <h1 class="text-white">RecipeBox</h1>
+
         <button
           class="
             btn

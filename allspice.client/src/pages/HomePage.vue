@@ -1,8 +1,5 @@
 <template>
   <div class="container">
-    <div class="row justify-content-center">
-      <h1 class="col-md-6 text-dark p-3 rounded text-center">AllSpice</h1>
-    </div>
     <div class="row justify-content-evenly">
       <div
         class="col-md-3 mx-3 my-4 px-0"
@@ -14,11 +11,11 @@
     </div>
   </div>
   <!-- <Footer /> -->
-  <div class="conatiner-fluid">
+  <div class="container-fluid">
     <div class="row justify-content-end">
-      <div class="col-md-2">
+      <div class="col-md-2 text-center f-24">
         <i
-          class="mdi mdi-plus bg-dark rounded-circle text-white f-24 selectable"
+          class="mdi mdi-plus bg-dark rounded-circle text-white selectable"
           data-bs-toggle="modal"
           data-bs-target="#modal"
         ></i>
@@ -60,4 +57,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.scrollbar {
+  overflow-y: scroll;
+  height: 74vh;
+}
+.scrollbar::-webkit-scrollbar {
+  width: 7px;
+}
+.scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #418848;
+  border-radius: 10px;
+}
 </style>

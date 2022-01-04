@@ -74,6 +74,8 @@ namespace allspice.Controllers
     }
 
     [HttpPut("{id}")]
+    [Authorize]
+
     public ActionResult<Recipe> Create([FromBody] Recipe updateRecipe, int id)
     {
       try

@@ -12,12 +12,13 @@
           <div class="col-md-6 mx-0 mt pe-0">
             <p class="bg-dark rounded px-2">{{ recipe.category }}</p>
           </div>
-          <div class="col-md-2 mx-0 px-0"></div>
-          <div class="col-md-1 selectable me-1 px-1 f-16" title="Favorite">
-            <i class="mdi mdi-heart"></i>
-          </div>
-          <div class="col-md-1 selectable px-1 f-16" title="Try">
-            <i class="mdi mdi-bookmark"></i>
+          <div class="col-md-2 mx-0 px-0 d-flex ms-auto">
+            <div class="f-16 text-dark me-1" title="Favorite">
+              <i class="mdi mdi-heart selectable"></i>
+            </div>
+            <div class="f-16 text-dark" title="Try">
+              <i class="mdi mdi-bookmark selectable"></i>
+            </div>
           </div>
         </div>
       </div>
