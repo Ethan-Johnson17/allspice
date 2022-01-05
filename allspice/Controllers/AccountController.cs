@@ -38,6 +38,22 @@ namespace allspice.Controllers
       }
     }
 
+    [HttpPut]
+    [Authorize]
+    public async Task<ActionResult<Account>> EditAsync([FromBody] Account updatedAccount)
+    {
+      try
+      {
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        Account account = _accountService.Edit(updatedAccount, userInfo.Email);
+        return Ok(account);
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
     [HttpGet("/[controller]/favorites")]
     [Authorize]
 

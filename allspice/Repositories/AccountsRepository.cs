@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -50,6 +51,7 @@ namespace allspice.Repositories
       return update;
     }
 
+
     // REVIEW likely will encounter errors, will need to review and problem solve here
     internal List<RecipeFavoriteViewModel> GetByRecipeFavorite(int recipeId)
     {
@@ -61,6 +63,11 @@ namespace allspice.Repositories
       JOIN accounts a ON acctRecipes.accountId = a.id
       WHERE acctRecipes.recipeId = @recipeId;";
       return _db.Query<RecipeFavoriteViewModel>(sql, new { recipeId }).ToList();
+    }
+
+    internal Account Update(Account updatedAccount)
+    {
+      throw new NotImplementedException();
     }
   }
 }
