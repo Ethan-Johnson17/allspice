@@ -47,10 +47,17 @@ namespace allspice.Repositories
       _db.Execute(sql, new { id });
     }
 
-    internal List<RecipeFavoriteViewModel> getFavorites()
+    internal List<RecipeFavoriteViewModel> getFavorites(string id)
     {
-      string sql = "SELECT * FROM favorites;";
-      return _db.Query<RecipeFavoriteViewModel>(sql).ToList();
+      string sql = @"
+      SELECT 
+      f.*,
+      r.* 
+      FROM favorites f
+      JOIN recipes r ON r.id = f.recipeId
+      WHERE f.accountId = @id
+      ;";
+      return _db.Query<RecipeFavoriteViewModel>(sql, new { id }).ToList();
     }
 
     internal Recipe Update(Recipe updateRecipe)

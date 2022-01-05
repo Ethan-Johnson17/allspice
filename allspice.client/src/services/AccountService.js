@@ -11,6 +11,23 @@ class AccountService {
       logger.error('HAVE YOU STARTED YOUR SERVER YET???', err)
     }
   }
+
+  async createFavorite(accountId, favorite) {
+    try {
+      const res = await api.post('/account/favorites', favorite)
+      AppState.favorites = res.data
+      logger.log('fff', res.data)
+    } catch (error) {
+      logger.error('Add favorite failed', error)
+
+    }
+  }
+
+  async getFavorites(query = '') {
+    const res = await api.get(query)
+    AppState.favorites = res.data
+    logger.log('service', res.data)
+  }
 }
 
 export const accountService = new AccountService()

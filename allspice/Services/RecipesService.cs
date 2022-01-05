@@ -51,9 +51,9 @@ namespace allspice.Services
       _repo.Remove(id);
     }
 
-    internal List<RecipeFavoriteViewModel> GetFavorites()
+    internal List<RecipeFavoriteViewModel> GetFavorites(string id)
     {
-      return _repo.getFavorites();
+      return _repo.getFavorites(id);
     }
 
     internal RecipeFavoriteViewModel CreateFavorite(RecipeFavoriteViewModel newFavorite)

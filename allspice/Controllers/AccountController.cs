@@ -57,11 +57,12 @@ namespace allspice.Controllers
     [HttpGet("/[controller]/favorites")]
     [Authorize]
 
-    public ActionResult<IEnumerable<RecipeFavoriteViewModel>> GetFavorites()
+    public async Task<ActionResult<IEnumerable<RecipeFavoriteViewModel>>> GetFavorites()
     {
       try
       {
-        List<RecipeFavoriteViewModel> favorites = _rs.GetFavorites();
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        List<RecipeFavoriteViewModel> favorites = _rs.GetFavorites(userInfo.Id);
         return Ok(favorites);
       }
       catch (Exception e)

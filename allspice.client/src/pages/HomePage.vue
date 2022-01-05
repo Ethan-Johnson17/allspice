@@ -51,6 +51,7 @@ export default {
     })
     return {
       recipes: computed(() => AppState.recipes),
+      favorites: computed(() => AppState.favorites),
     }
   }
 }

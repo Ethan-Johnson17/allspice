@@ -1,5 +1,5 @@
 <template>
-  <a data-bs-toggle="modal" :href="'#recipeDetails-' + recipe.id">
+  <div @click="openModal(recipe.id)" :id="'#recipeDetails-' + recipe.id">
     <div
       class="body rounded selectGrow"
       :style="{
@@ -13,11 +13,27 @@
             <p class="bg-dark rounded px-2">{{ recipe.category }}</p>
           </div>
           <div class="col-md-2 mx-0 px-0 d-flex ms-auto">
-            <div class="f-16 text-dark me-1" title="Favorite">
-              <i class="mdi mdi-heart selectable"></i>
+            <div
+              class="f-16 text-dark me-1"
+              title="Favorite"
+              v-if="!isFavorite"
+            >
+              <i
+                class="mdi mdi-heart selectable"
+                @click.stop="addFavorite(recipe.id, account.id)"
+              ></i>
+            </div>
+            <div class="f-16 text-dark me-1" title="Favorite" v-if="isFavorite">
+              <i
+                class="mdi mdi-heart selectable text-danger"
+                @click.stop="addFavorite(recipe.id, account.id)"
+              ></i>
             </div>
             <div class="f-16 text-dark" title="Try">
-              <i class="mdi mdi-bookmark selectable"></i>
+              <i
+                class="mdi mdi-bookmark selectable"
+                @click.stop="addTry(recipe.id)"
+              ></i>
             </div>
           </div>
         </div>
@@ -29,7 +45,7 @@
         </div>
       </div>
     </div>
-  </a>
+  </div>
   <Modal :id="'recipeDetails-' + recipe.id">
     <template #modal-title>Recipe Details</template>
     <template #modal-body>
@@ -42,13 +58,38 @@
 <script>
 import { computed } from '@vue/reactivity'
 import { AppState } from '../AppState'
+import { Modal } from 'bootstrap'
+import { logger } from '../utils/Logger'
+import { accountService } from '../services/AccountService'
+import { onMounted } from '@vue/runtime-core'
+import Pop from '../utils/Pop'
 export default {
   props: {
     recipe: { type: Object },
   },
   setup(props) {
+    // onMounted(async () => {
+    //   try {
+    //     await accountService.getFavorites('account/favorites')
+    //   } catch (error) {
+    //     logger.error(error)
+    //     Pop.toast(error.message, 'error')
+    //   }
+    // })
     return {
       recipes: computed(() => AppState.recipes),
+      account: computed(() => AppState.account),
+      favorites: computed(() => AppState.favorites),
+      isFavorite: computed(() => AppState.favorites.find(r => r.id == props.recipe.id)),
+
+      openModal(id) {
+        Modal.getOrCreateInstance('#recipeDetails-' + id).toggle()
+      },
+
+      async addFavorite(recipeid, accountId) {
+        let favorite = { recipeId: recipeid, accountId: accountId }
+        await accountService.createFavorite(accountId, favorite)
+      }
     }
   }
 }
